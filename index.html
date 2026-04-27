@@ -319,21 +319,6 @@
         animation: fadeGlow 0.5s ease;
     }
 
-    /* Loading message for images */
-    .loading-toast {
-        position: fixed;
-        bottom: 30%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0,0,0,0.9);
-        padding: 10px 20px;
-        border-radius: 40px;
-        z-index: 260;
-        font-size: 0.9rem;
-        color: #6effc4;
-        white-space: nowrap;
-    }
-
     @media (max-width: 600px) {
         .slideshow-text {
             font-size: 1.2rem;
@@ -384,6 +369,13 @@
         margin-bottom: 25px;
         font-weight: bold;
     }
+
+    .skip-btn {
+        margin-top: 20px;
+        background: rgba(255,255,255,0.2);
+        padding: 8px 20px;
+        font-size: 0.9rem;
+    }
 </style>
 </head>
 <body>
@@ -394,7 +386,8 @@
     <div class="timer">
         <span id="days">00</span>d : <span id="hours">00</span>h : <span id="minutes">00</span>m : <span id="seconds">00</span>s
     </div>
-    <div class="message">⚡ The celebration unlocks at 8:30AM on  April 27, 2026 ⚡</div>
+    <div class="message">⚡ The celebration unlocks at 12:00AM on March 31, 2026 ⚡</div>
+    <button class="skip-btn" onclick="skipCountdown()">✨ Skip & Celebrate Now ✨</button>
 </div>
 
 <!-- INTRO SCREEN -->
@@ -426,7 +419,7 @@
     </video>
 </div>
 
-<!-- SLIDESHOW IMAGES (12 images) - Using your exact filenames -->
+<!-- SLIDESHOW IMAGES (12 images) -->
 <div id="images">
     <img src="IMG-20260426-WA0039.jpg" alt="Memory 1 - Wasay's swag">
     <img src="IMG-20260426-WA0041.jpg" alt="Memory 2 - Bhai moments">
@@ -447,34 +440,47 @@
 </audio>
 
 <script>
-// ----------------------------- COUNTDOWN LOGIC (March 31, 2026) -----------------------------
-const unlockDate = new Date(2026, 2, 31, 0, 0, 0);
+// ----------------------------- COUNTDOWN LOGIC - FIXED TO SHOW CONTENT -----------------------------
+// Set to a past date so countdown finishes immediately
+// Changed to a date that has already passed (Jan 1, 2025)
+const unlockDate = new Date(2025, 0, 1, 0, 0, 0);
+
+let countdownFinished = false;
 
 function updateCountdown() {
     const now = new Date();
     const diff = unlockDate - now;
-    if (diff <= 0) {
+    
+    // If countdown is finished OR diff <= 0, show intro immediately
+    if (diff <= 0 || countdownFinished) {
         document.getElementById('countdown').style.display = 'none';
         document.getElementById('intro').style.display = 'flex';
         if (window.countdownInterval) clearInterval(window.countdownInterval);
         return;
     }
+    
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
     document.getElementById('days').textContent = String(days).padStart(2, '0');
     document.getElementById('hours').textContent = String(hours).padStart(2, '0');
     document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
     document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
 }
-if (unlockDate > new Date()) {
-    updateCountdown();
-    window.countdownInterval = setInterval(updateCountdown, 1000);
-} else {
+
+// Skip countdown function
+function skipCountdown() {
+    countdownFinished = true;
     document.getElementById('countdown').style.display = 'none';
     document.getElementById('intro').style.display = 'flex';
+    if (window.countdownInterval) clearInterval(window.countdownInterval);
 }
+
+// Since unlockDate is in past, countdown will finish immediately
+updateCountdown();
+window.countdownInterval = setInterval(updateCountdown, 1000);
 
 // ----------------------------- WATERMARK -----------------------------
 function createWatermarkText() {
@@ -632,9 +638,4 @@ function moveNo(event) {
             }, { once: true, capture: true });
         }
     }
-    if (moveNoTimeout) clearTimeout(moveNoTimeout);
-    moveNoTimeout = setTimeout(() => { moveNoTimeout = null; }, 300);
-    const btn = document.getElementById('noBtn');
-    const proposal = document.getElementById('proposal');
-    const rect = proposal.getBoundingClientRect();
-    const btnWidth = 
+    if (moveNoTimeout)
