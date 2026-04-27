@@ -13,26 +13,23 @@
 
     body {
         background: #0a0a0a;
-        font-family: 'Segoe UI', 'Poppins', 'Dancing Script', cursive, sans-serif;
+        font-family: 'Segoe UI', 'Poppins', sans-serif;
         color: #fff3e6;
         overflow-x: hidden;
         min-height: 100vh;
     }
 
-    /* Removed the countdown styles completely */
-    
     #intro {
         position: fixed;
         width: 100%;
         height: 100%;
         background: radial-gradient(circle at center, #1a0010, #000000);
-        display: flex;  /* Show intro immediately */
+        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         z-index: 100;
         backdrop-filter: blur(2px);
-        transition: opacity 1s ease;
     }
 
     #intro h1 {
@@ -41,12 +38,10 @@
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        text-shadow: 0 0 15px rgba(0,184,169,0.4);
-        letter-spacing: 2px;
-        opacity: 0;
-        animation: fadeGlow 2s forwards;
         text-align: center;
         padding: 0 20px;
+        animation: fadeGlow 2s forwards;
+        opacity: 0;
     }
 
     #enterBtn {
@@ -96,14 +91,12 @@
         white-space: nowrap;
         font-size: 1.6rem;
         font-weight: bold;
-        color: rgba(100, 255, 200, 0.15);
-        font-family: 'Courier New', monospace;
+        color: rgba(100, 255, 200, 0.12);
+        font-family: monospace;
         text-transform: uppercase;
-        letter-spacing: 2px;
         transform: rotate(-5deg);
         user-select: none;
         pointer-events: none;
-        text-shadow: 0 0 6px #00b8a9;
         animation: floatWatermark 20s linear infinite;
     }
 
@@ -120,15 +113,13 @@
         backdrop-filter: blur(12px);
         padding: 20px 24px;
         border-radius: 60px;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         font-weight: 500;
-        font-family: 'Segoe UI', monospace;
         box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         border: 1px solid rgba(0,255,200,0.3);
         opacity: 0;
         transform: translateY(40px);
         transition: 1s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        letter-spacing: 0.5px;
         text-align: left;
         color: #eafff5;
     }
@@ -197,8 +188,6 @@
     #noBtn {
         margin-left: 20px;
         background: #2c3e38;
-        transition: 0.1s;
-        cursor: pointer;
         position: relative;
         z-index: 10;
     }
@@ -216,7 +205,7 @@
         align-items: center;
     }
 
-    #cakeVideo {
+    #birthdayVideo {
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
@@ -265,14 +254,11 @@
         font-weight: bold;
         color: #b7ffe6;
         border: 1px solid #00b8a9;
-        font-family: 'Courier New', monospace;
+        font-family: monospace;
         z-index: 250;
-        letter-spacing: 2px;
-        box-shadow: 0 0 25px #00b8a9;
         text-align: center;
         white-space: nowrap;
         pointer-events: none;
-        animation: fadeGlow 0.5s ease;
     }
 
     @media (max-width: 600px) {
@@ -285,10 +271,13 @@
         }
         .story-block {
             font-size: 1rem;
-            padding: 14px 20px;
+            padding: 14px 16px;
         }
         #proposal h2 {
             font-size: 1.6rem;
+        }
+        #intro h1 {
+            font-size: 1.8rem;
         }
     }
 
@@ -326,10 +315,10 @@
 </head>
 <body>
 
-<!-- INTRO SCREEN - Now shown directly, no countdown -->
+<!-- INTRO SCREEN -->
 <div id="intro">
     <h1>⚡ For My Legendary Bro — Abdul Wasay ⚡</h1>
-    <button id="enterBtn" onclick="enterSite()">🤝 Enter The Celebration 🤝</button>
+    <button id="enterBtn">🤝 Enter The Celebration 🤝</button>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -337,38 +326,37 @@
     <div id="watermarkWrapper" class="watermark-bg"></div>
     <h1>💥 Abdul Wasay • Phopho Zad CZN + Bestfriend 💥</h1>
     <div id="story"></div>
-    <button id="startBtn" onclick="startParty()">🎂 Start Birthday Journey 🎂</button>
+    <button id="startBtn">🎂 Start Birthday Journey 🎂</button>
     <div id="proposal">
         <div class="ring">🏆 🤜🤛 🏆</div>
         <h2>🤝 Will you accept this legendary bond — CZN & Bestfriend forever? 🤝</h2>
-        <button onclick="yesClicked()">Hell Yeah! Forever Bros 💪</button>
-        <button id="noBtn" onmouseover="moveNo(event)" ontouchstart="moveNo(event)" onclick="moveNo(event)">
-            🌀 Try to escape but bro code is eternal 🌀
-        </button>
+        <button id="yesBtn">Hell Yeah! Forever Bros 💪</button>
+        <button id="noBtn">🌀 Try to escape but bro code is eternal 🌀</button>
     </div>
 </div>
 
 <!-- VIDEO CONTAINER -->
 <div class="video-container" id="videoContainer">
-    <video id="cakeVideo" controls autoplay muted playsinline>
+    <video id="birthdayVideo" controls autoplay muted playsinline>
         <source src="lv_7535242429855780149_20260426235217.mp4" type="video/mp4">
+        Your browser does not support the video tag.
     </video>
 </div>
 
-<!-- SLIDESHOW IMAGES (12 images) -->
+<!-- SLIDESHOW IMAGES -->
 <div id="images">
-    <img src="IMG-20260426-WA0039.jpg" alt="Memory 1 - Wasay's swag">
-    <img src="IMG-20260426-WA0041.jpg" alt="Memory 2 - Bhai moments">
-    <img src="IMG-20260426-WA0042.jpg" alt="Memory 3 - CZN bond">
-    <img src="IMG-20260426-WA0043.jpg" alt="Memory 4 - Bestfriend energy">
-    <img src="IMG-20260426-WA0044.jpg" alt="Memory 5 - Night vibes">
-    <img src="IMG-20260426-WA0045.jpg" alt="Memory 6 - Laugh therapy">
-    <img src="IMG-20260426-WA0046.jpg" alt="Memory 7 - Unbreakable duo">
-    <img src="IMG-20260426-WA0050.jpg" alt="Memory 8 - Epic outings">
-    <img src="IMG-20260426-WA0051.jpg" alt="Memory 9 - Phopho zad love">
-    <img src="IMG-20260426-WA0053.jpg" alt="Memory 10 - Top two legacy">
-    <img src="IMG-20260426-WA0039.jpg" alt="Memory 11 - Crazy adventures">
-    <img src="IMG-20260426-WA0044.jpg" alt="Memory 12 - Birthday king">
+    <img src="IMG-20260426-WA0039.jpg" alt="Memory 1">
+    <img src="IMG-20260426-WA0041.jpg" alt="Memory 2">
+    <img src="IMG-20260426-WA0042.jpg" alt="Memory 3">
+    <img src="IMG-20260426-WA0043.jpg" alt="Memory 4">
+    <img src="IMG-20260426-WA0044.jpg" alt="Memory 5">
+    <img src="IMG-20260426-WA0045.jpg" alt="Memory 6">
+    <img src="IMG-20260426-WA0046.jpg" alt="Memory 7">
+    <img src="IMG-20260426-WA0050.jpg" alt="Memory 8">
+    <img src="IMG-20260426-WA0051.jpg" alt="Memory 9">
+    <img src="IMG-20260426-WA0053.jpg" alt="Memory 10">
+    <img src="IMG-20260426-WA0039.jpg" alt="Memory 11">
+    <img src="IMG-20260426-WA0044.jpg" alt="Memory 12">
 </div>
 
 <audio id="bgMusic" loop preload="auto">
@@ -376,51 +364,35 @@
 </audio>
 
 <script>
-// ----------------------------- NO COUNTDOWN - DIRECT START -----------------------------
-// The intro is already visible, no timer needed
+// ALL FUNCTIONS DEFINED FIRST - NO MORE onClick ERRORS!
 
-// ----------------------------- WATERMARK -----------------------------
+// Watermark creation
 function createWatermarkText() {
     const watermarkContainer = document.getElementById('watermarkWrapper');
     if (!watermarkContainer) return;
     watermarkContainer.innerHTML = '';
     const phrases = ['WASAY THE GREAT 💥', 'BRO CODE 🔥', 'CZN + BESTIE 🎂', 'ABDUL WASAY 👑', 'PHOPHO ZAD LEGEND'];
-    for (let i = 0; i < 36; i++) {
+    for (let i = 0; i < 30; i++) {
         const span = document.createElement('div');
         span.classList.add('watermark-text');
-        let text = phrases[i % phrases.length];
-        span.innerText = text;
-        const leftPos = Math.random() * 100;
-        const topPos = Math.random() * 100;
-        const rotation = (Math.random() * 20) - 10;
-        const fontSize = 1 + Math.random() * 1.4;
-        span.style.left = leftPos + '%';
-        span.style.top = topPos + '%';
-        span.style.transform = `rotate(${rotation}deg)`;
-        span.style.fontSize = fontSize + 'rem';
-        span.style.animationDuration = 15 + Math.random() * 15 + 's';
+        span.innerText = phrases[i % phrases.length];
+        span.style.left = Math.random() * 100 + '%';
+        span.style.top = Math.random() * 100 + '%';
+        span.style.transform = `rotate(${(Math.random() * 20) - 10}deg)`;
+        span.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+        span.style.animationDuration = (15 + Math.random() * 15) + 's';
         watermarkContainer.appendChild(span);
     }
 }
 
-function enterSite() {
-    const intro = document.getElementById('intro');
-    const mainDiv = document.getElementById('main');
-    intro.style.display = 'none';
-    mainDiv.style.display = 'block';
-    createWatermarkText();
-    startSubtleDopeRain();
-}
-
-let dopeInterval;
-function startSubtleDopeRain() {
-    if (dopeInterval) clearInterval(dopeInterval);
-    dopeInterval = setInterval(() => {
+// Floating emojis
+let floatInterval;
+function startFloatingEmojis() {
+    if (floatInterval) clearInterval(floatInterval);
+    floatInterval = setInterval(() => {
         const emoji = document.createElement('div');
-        const random = Math.random();
-        if (random > 0.6) emoji.innerHTML = '⚡';
-        else if (random > 0.3) emoji.innerHTML = '🤜';
-        else emoji.innerHTML = '🔥';
+        const icons = ['⚡', '🤜', '🤛', '🔥', '💥', '🎂', '🏆', '👑'];
+        emoji.innerHTML = icons[Math.floor(Math.random() * icons.length)];
         emoji.style.position = 'fixed';
         emoji.style.left = Math.random() * 100 + '%';
         emoji.style.bottom = '-20px';
@@ -431,39 +403,34 @@ function startSubtleDopeRain() {
         emoji.style.animation = 'floatUp 7s ease-out forwards';
         document.body.appendChild(emoji);
         setTimeout(() => emoji.remove(), 7000);
-    }, 850);
+    }, 800);
 }
-const styleSheet = document.createElement("style");
-styleSheet.textContent = `
-    @keyframes floatUp {
-        0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
-        100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
-    }
-`;
-document.head.appendChild(styleSheet);
 
-// ----------------------------- STORY MESSAGES (CZN + BESTFRIEND) -----------------------------
+// Add floatUp animation
+const floatStyle = document.createElement('style');
+floatStyle.textContent = `@keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 0.7; } 100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; } }`;
+document.head.appendChild(floatStyle);
+
+// Story messages - New Mixed Timeline
 const storyMessages = [
-    "🧬 Tu mera PHOPHO ZAD CZN hai — blood relation, khandaan ka hissa.",
-    "🤜 Lekin tu mera BEST FRIEND bhi hai — by my own choice, apni marzi se. 💖",
-    "🎯 I don't care how many friends you have, lekin tu mere TOP TWO mein hai. Always.",
-    "😂🙃 Feeling some jealousy sometimes when I see you with your other best friend... but I know every person has its own place.",
-    "🫀 BEST WISHES for you. Enjoy your day! Once again JANAM DIN MUBARAK Abdul Wasay!",
-    "😶 Ye sab main kabhi samnay nahi keh sakta... na itni himmat. Aur main jaanta hoon kabhi kahunga nahi.",
-    "💔 Sorry agar kuch zyada keh diya. HAPPY BIRTHDAY SHAHZADAY BHAI MERE! Tu special hai mere liye.",
-    "🌹 تمہاری سالگرہ کے دن یہ دعا ہے ہماری, جتنے ہیں چاند تارے اتنی ہو عمر تمہاری. ♥️"
+    "🎂 Happy Birthday, mere CZN — Abdul Wasay! Tu mera phopho zad bhai hai, khoon ka rishta hai, aur best friend bhi apni marzi se. 💖",
+    "🤝 Yaad hai wo din? Maine tujhse kaha tha — 'Bhai, meri setting karwa de uss ladki se.' Tune bola: 'Chal, baad mein dekhte hain.' 😏",
+    "😶 Tune serious nahi liya. Shayad teri marzi thi, shayad busy tha — lekin main ruka teri setting pe. Aur baad kab aata hai, ye tu hi jaane. 😂",
+    "📱 Phir ek din wo khud aayi — uss ladki ne mujhe msg kiya. Maine socha, 'Arey! setting ho gayi bina bhai ke?' Lekin sach kuch aur tha. 🕵️",
+    "❌ Usne mera fake account poocha — jo maine sirf uske liye banaya tha (proposal ke liye 💍). Aur request accept nahi kari. Phir usne tere account se mujhe reply kiya — aur politely reject kar diya. 💔",
+    "🎯 Ek taraf tune setting nahi kari, doosri taraf ladki ne reject kar diya — double dhoka. Matlab, bhai, tune setting nahi kari aur result waisa hi mila. 😂",
+    "😅 Lekin teri birthday hai, toh main gaali nahi dunga, sirf pyaar se taunt dunga: 'Bhai, agli baar setting karna seekh le — warna main teri setting laga dunga.' 🤜",
+    "💬 Sach kahun? Uss din dard hua. Kyuki maine tujhpe bharosa kiya tha. Lekin main maaf kar chuka hoon. Kyuki tu mera bhai hai — chahe tu setting na kare, toh bhi.",
+    "🫀 Aaj birthday par bas itna kahunga — 'Kabhi agar phir kahunga, toh sun lena. Aur haan, teri slyness mujhe pata hai.' 😶‍🌫️",
+    "🎂 Happy birthday, mere bhai! Tu legend hai, bestfriend hai, CZN hai. Bas thoda sa 'setting mein zero, lekin dil mein hero' hai tu. 💖🤜🤛"
 ];
 
-const storyDiv = document.getElementById('story');
-storyMessages.forEach((msg, idx) => {
-    let block = document.createElement('div');
-    block.className = 'story-block';
-    block.id = `storyBlock${idx}`;
-    storyDiv.appendChild(block);
-});
-
 let currentStoryIndex = 0;
+let confettiInterval = null;
+let textInterval = null;
+let slideInterval = null;
 
+// Typewriter effect
 function typeWriterEffect(element, text, callback) {
     let i = 0;
     element.innerHTML = '';
@@ -471,7 +438,7 @@ function typeWriterEffect(element, text, callback) {
         if (i < text.length) {
             element.innerHTML += text[i];
             i++;
-            setTimeout(typing, 35);
+            setTimeout(typing, 30);
         } else {
             if (callback) callback();
         }
@@ -479,35 +446,53 @@ function typeWriterEffect(element, text, callback) {
     typing();
 }
 
+// Display stories one by one
 function displayNextStory() {
     if (currentStoryIndex < storyMessages.length) {
-        const block = document.getElementById(`storyBlock${currentStoryIndex}`);
-        block.classList.add('visible');
-        typeWriterEffect(block, storyMessages[currentStoryIndex], () => {
-            currentStoryIndex++;
-            setTimeout(displayNextStory, 700);
-        });
+        const blocks = document.querySelectorAll('.story-block');
+        const block = blocks[currentStoryIndex];
+        if (block) {
+            block.classList.add('visible');
+            typeWriterEffect(block, storyMessages[currentStoryIndex], () => {
+                currentStoryIndex++;
+                setTimeout(displayNextStory, 650);
+            });
+        }
     } else {
-        document.getElementById('startBtn').style.display = 'none';
+        const startBtn = document.getElementById('startBtn');
+        if (startBtn) startBtn.style.display = 'none';
         const proposal = document.getElementById('proposal');
-        proposal.style.display = 'block';
-        proposal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (proposal) {
+            proposal.style.display = 'block';
+            proposal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 }
 
-function startParty() {
-    const startBtn = document.getElementById('startBtn');
-    startBtn.style.display = 'none';
-    const music = document.getElementById('bgMusic');
-    music.play().catch(e => console.log("autoplay blocked"));
-    startConfettiRainBros();
-    displayNextStory();
+// Create story blocks
+function createStoryBlocks() {
+    const storyDiv = document.getElementById('story');
+    if (!storyDiv) return;
+    storyDiv.innerHTML = '';
+    storyMessages.forEach((msg, idx) => {
+        let block = document.createElement('div');
+        block.className = 'story-block';
+        block.id = `storyBlock${idx}`;
+        storyDiv.appendChild(block);
+    });
 }
 
-let confettiIntervalBros;
-function startConfettiRainBros() {
-    if (confettiIntervalBros) clearInterval(confettiIntervalBros);
-    confettiIntervalBros = setInterval(() => {
+// Start party function
+function startParty() {
+    const startBtn = document.getElementById('startBtn');
+    if (startBtn) startBtn.style.display = 'none';
+    
+    const bgMusic = document.getElementById('bgMusic');
+    if (bgMusic) bgMusic.play().catch(e => console.log("Audio play blocked"));
+    
+    // Start confetti
+    if (confettiInterval) clearInterval(confettiInterval);
+    confettiInterval = setInterval(() => {
         for (let i = 0; i < 4; i++) {
             const conf = document.createElement('div');
             conf.className = 'confetti';
@@ -520,103 +505,120 @@ function startConfettiRainBros() {
             setTimeout(() => conf.remove(), 5500);
         }
     }, 280);
+    
+    currentStoryIndex = 0;
+    displayNextStory();
 }
 
-let moveNoTimeout = null;
-function moveNo(event) {
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        if (event.type === 'touchstart') {
-            event.target.addEventListener('click', function preventClick(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                event.target.removeEventListener('click', preventClick);
-            }, { once: true, capture: true });
-        }
-    }
-    if (moveNoTimeout) clearTimeout(moveNoTimeout);
-    moveNoTimeout = setTimeout(() => { moveNoTimeout = null; }, 300);
-    const btn = document.getElementById('noBtn');
+// Move "No" button
+function moveNoButton(btn) {
     const proposal = document.getElementById('proposal');
+    if (!proposal) return;
     const rect = proposal.getBoundingClientRect();
     const btnWidth = btn.offsetWidth;
     const btnHeight = btn.offsetHeight;
-    const maxX = rect.width - btnWidth - 20;
-    const maxY = rect.height - btnHeight - 20;
-    let newLeft = Math.random() * Math.max(0, maxX);
-    let newTop = Math.random() * Math.max(0, maxY);
-    const yesBtn = document.querySelector('#proposal button:first-of-type');
-    const yesRect = yesBtn.getBoundingClientRect();
-    let overlap = true;
-    let attempts = 0;
-    while (overlap && attempts < 15) {
-        newLeft = Math.random() * Math.max(0, maxX);
-        newTop = Math.random() * Math.max(0, maxY);
-        const potentialRect = {
-            left: rect.left + newLeft,
-            right: rect.left + newLeft + btnWidth,
-            top: rect.top + newTop,
-            bottom: rect.top + newTop + btnHeight
-        };
-        if (potentialRect.right > yesRect.left && potentialRect.left < yesRect.right &&
-            potentialRect.bottom > yesRect.top && potentialRect.top < yesRect.bottom) {
-            attempts++;
-            continue;
-        }
-        overlap = false;
-    }
+    const maxX = Math.max(0, rect.width - btnWidth - 20);
+    const maxY = Math.max(0, rect.height - btnHeight - 20);
+    const newLeft = Math.random() * maxX;
+    const newTop = Math.random() * maxY;
     btn.style.position = 'absolute';
     btn.style.left = newLeft + 'px';
     btn.style.top = newTop + 'px';
     btn.style.marginLeft = '0';
-    btn.style.transform = 'scale(0.9)';
-    setTimeout(() => { btn.style.transform = ''; }, 150);
-    const broMessage = document.createElement('div');
-    broMessage.innerText = '🌀 Bro code says: you cannot escape this legendary friendship 🌀';
-    broMessage.style.position = 'fixed';
-    broMessage.style.bottom = '30%';
-    broMessage.style.left = '50%';
-    broMessage.style.transform = 'translateX(-50%)';
-    broMessage.style.background = 'rgba(0,0,0,0.8)';
-    broMessage.style.backdropFilter = 'blur(12px)';
-    broMessage.style.padding = '10px 20px';
-    broMessage.style.borderRadius = '50px';
-    broMessage.style.fontSize = '1.2rem';
-    broMessage.style.color = '#b3ffec';
-    broMessage.style.zIndex = '1000';
-    broMessage.style.whiteSpace = 'nowrap';
-    document.body.appendChild(broMessage);
-    setTimeout(() => broMessage.remove(), 1500);
-    return false;
-}
-
-function yesClicked() {
-    const mainChildren = document.querySelectorAll('#main > *');
-    mainChildren.forEach(child => {
-        if (!child.classList?.contains('watermark-bg') && child.id !== 'watermarkWrapper') {
-            child.style.display = 'none';
-        }
-    });
-    const videoContainer = document.getElementById('videoContainer');
-    const video = document.getElementById('cakeVideo');
-    videoContainer.style.display = 'flex';
-    video.muted = false;
     
-    video.addEventListener('ended', function onEnded() {
-        video.removeEventListener('ended', onEnded);
-        videoContainer.style.display = 'none';
-        startBroSlideshow();
-    });
-    video.addEventListener('error', function onError() {
-        videoContainer.style.display = 'none';
-        startBroSlideshow();
-    });
-    video.play().catch(e => {
-        console.log("Video error", e);
-        videoContainer.style.display = 'none';
-        startBroSlideshow();
-    });
+    const msg = document.createElement('div');
+    msg.innerText = '🌀 Bro code says: you cannot escape this legendary friendship 🌀';
+    msg.style.position = 'fixed';
+    msg.style.bottom = '30%';
+    msg.style.left = '50%';
+    msg.style.transform = 'translateX(-50%)';
+    msg.style.background = 'rgba(0,0,0,0.8)';
+    msg.style.padding = '10px 20px';
+    msg.style.borderRadius = '50px';
+    msg.style.fontSize = '1rem';
+    msg.style.color = '#b3ffec';
+    msg.style.zIndex = '1000';
+    msg.style.whiteSpace = 'nowrap';
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 1500);
 }
 
-functi
+// Yes clicked - show video then slideshow
+function yesClicked() {
+    // Hide main content except watermark
+    const mainDiv = document.getElementById('main');
+    if (mainDiv) {
+        const children = mainDiv.querySelectorAll(':scope > *');
+        children.forEach(child => {
+            if (!child.classList?.contains('watermark-bg') && child.id !== 'watermarkWrapper') {
+                child.style.display = 'none';
+            }
+        });
+    }
+    
+    const videoContainer = document.getElementById('videoContainer');
+    const video = document.getElementById('birthdayVideo');
+    if (videoContainer) videoContainer.style.display = 'flex';
+    if (video) video.muted = false;
+    
+    if (video) {
+        video.onended = function() {
+            if (videoContainer) videoContainer.style.display = 'none';
+            startSlideshow();
+        };
+        
+        video.onerror = function() {
+            if (videoContainer) videoContainer.style.display = 'none';
+            startSlideshow();
+        };
+        
+        video.play().catch(e => {
+            console.log("Video error:", e);
+            if (videoContainer) videoContainer.style.display = 'none';
+            startSlideshow();
+        });
+    } else {
+        if (videoContainer) videoContainer.style.display = 'none';
+        startSlideshow();
+    }
+}
+
+// Slideshow function
+function startSlideshow() {
+    const slideshowDiv = document.getElementById('images');
+    const images = document.querySelectorAll('#images img');
+    
+    if (!slideshowDiv) return;
+    slideshowDiv.style.display = 'block';
+    
+    images.forEach(img => img.classList.remove('active'));
+    let idx = 0;
+    if (images.length > 0) images[0].classList.add('active');
+    
+    if (slideInterval) clearInterval(slideInterval);
+    slideInterval = setInterval(() => {
+        images.forEach(img => img.classList.remove('active'));
+        idx = (idx + 1) % images.length;
+        images[idx].classList.add('active');
+    }, 3800);
+    
+    const textLines = [
+        "🎂 HAPPY BIRTHDAY ABDUL WASAY! CZN + BESTFRIEND 🎂",
+        "🤜🤛 Blood relation + Bestfriend by choice = LEGENDARY 🤛🤜",
+        "💥 Tu mere TOP TWO mein hai — hamesha yaad rakhna 💥",
+        "🙃 Thodi jealousy, lekin pyaar zyada — you're my brother 🙃",
+        "🫀 BEST WISHES! Enjoy your day king 👑",
+        "😶 Jo main keh nahi sakta, ye slideshow wo alfaaz hai 😶",
+        "🌹 Jitne chaand taare, utni ho umar teri 🌹",
+        "💖 LOVE YOU BHAI — PHOPHO ZAD CZN FOREVER 💖"
+    ];
+    
+    let textDiv = document.querySelector('.slideshow-text');
+    if (!textDiv) {
+        textDiv = document.createElement('div');
+        textDiv.className = 'slideshow-text';
+        document.body.appendChild(textDiv);
+    }
+    
+    let textIndex = 0;
+    textDiv.inn
