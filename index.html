@@ -364,7 +364,16 @@
 </audio>
 
 <script>
-// ALL FUNCTIONS DEFINED FIRST - NO MORE onClick ERRORS!
+// ENTER SITE FUNCTION
+function enterSite() {
+    const intro = document.getElementById('intro');
+    const mainDiv = document.getElementById('main');
+    if (intro) intro.style.display = 'none';
+    if (mainDiv) mainDiv.style.display = 'block';
+    createWatermarkText();
+    startFloatingEmojis();
+    startHeartbeatGlow();
+}
 
 // Watermark creation
 function createWatermarkText() {
@@ -490,7 +499,6 @@ function startParty() {
     const bgMusic = document.getElementById('bgMusic');
     if (bgMusic) bgMusic.play().catch(e => console.log("Audio play blocked"));
     
-    // Start confetti
     if (confettiInterval) clearInterval(confettiInterval);
     confettiInterval = setInterval(() => {
         for (let i = 0; i < 4; i++) {
@@ -545,7 +553,6 @@ function moveNoButton(btn) {
 
 // Yes clicked - show video then slideshow
 function yesClicked() {
-    // Hide main content except watermark
     const mainDiv = document.getElementById('main');
     if (mainDiv) {
         const children = mainDiv.querySelectorAll(':scope > *');
@@ -621,4 +628,64 @@ function startSlideshow() {
     }
     
     let textIndex = 0;
-    textDiv.inn
+    textDiv.innerText = textLines[0];
+    if (textInterval) clearInterval(textInterval);
+    textInterval = setInterval(() => {
+        textIndex = (textIndex + 1) % textLines.length;
+        textDiv.innerText = textLines[textIndex];
+    }, 3800);
+}
+
+// Heartbeat glow effect
+function startHeartbeatGlow() {
+    setInterval(() => {
+        const mainDiv = document.getElementById('main');
+        if (mainDiv && mainDiv.style.display === 'block') {
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = 0;
+            overlay.style.left = 0;
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.background = 'radial-gradient(circle, rgba(0,184,169,0.08) 0%, rgba(0,0,0,0) 80%)';
+            overlay.style.pointerEvents = 'none';
+            overlay.style.zIndex = '1';
+            document.body.appendChild(overlay);
+            setTimeout(() => overlay.remove(), 500);
+        }
+    }, 4500);
+}
+
+// SETUP ALL EVENT LISTENERS WHEN PAGE LOADS
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Page loaded - Setting up event listeners...");
+    
+    createStoryBlocks();
+    
+    const enterBtn = document.getElementById('enterBtn');
+    const startBtn = document.getElementById('startBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    
+    if (enterBtn) enterBtn.onclick = enterSite;
+    if (startBtn) startBtn.onclick = startParty;
+    if (yesBtn) yesBtn.onclick = yesClicked;
+    
+    if (noBtn) {
+        noBtn.onmouseover = function() { moveNoButton(noBtn); };
+        noBtn.ontouchstart = function(e) { 
+            e.preventDefault(); 
+            moveNoButton(noBtn); 
+        };
+        noBtn.onclick = function(e) { 
+            e.preventDefault(); 
+            moveNoButton(noBtn); 
+            return false; 
+        };
+    }
+    
+    console.log("All event listeners set up successfully!");
+});
+</script>
+</body>
+</html>
