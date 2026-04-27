@@ -19,60 +19,14 @@
         min-height: 100vh;
     }
 
-    #countdown {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at center, #1a0010, #000000);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        text-align: center;
-        backdrop-filter: blur(2px);
-    }
-
-    .countdown-title {
-        font-size: 2.5rem;
-        margin-bottom: 2rem;
-        background: linear-gradient(135deg, #6effc4, #00b8a9);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        letter-spacing: 2px;
-    }
-
-    .timer {
-        font-size: 3rem;
-        font-weight: bold;
-        font-family: monospace;
-        background: rgba(0,0,0,0.6);
-        padding: 1rem 2rem;
-        border-radius: 60px;
-        backdrop-filter: blur(8px);
-        box-shadow: 0 0 20px rgba(0,184,169,0.3);
-        letter-spacing: 4px;
-    }
-
-    .timer span {
-        font-size: 1.5rem;
-        display: inline-block;
-        margin: 0 0.2rem;
-    }
-
-    .message {
-        margin-top: 2rem;
-        font-size: 1.2rem;
-        opacity: 0.8;
-    }
-
+    /* Removed the countdown styles completely */
+    
     #intro {
         position: fixed;
         width: 100%;
         height: 100%;
         background: radial-gradient(circle at center, #1a0010, #000000);
-        display: none;
+        display: flex;  /* Show intro immediately */
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -91,6 +45,8 @@
         letter-spacing: 2px;
         opacity: 0;
         animation: fadeGlow 2s forwards;
+        text-align: center;
+        padding: 0 20px;
     }
 
     #enterBtn {
@@ -334,9 +290,6 @@
         #proposal h2 {
             font-size: 1.6rem;
         }
-        .timer {
-            font-size: 2rem;
-        }
     }
 
     .confetti {
@@ -369,28 +322,11 @@
         margin-bottom: 25px;
         font-weight: bold;
     }
-
-    .skip-btn {
-        margin-top: 20px;
-        background: rgba(255,255,255,0.2);
-        padding: 8px 20px;
-        font-size: 0.9rem;
-    }
 </style>
 </head>
 <body>
 
-<!-- COUNTDOWN OVERLAY -->
-<div id="countdown">
-    <div class="countdown-title">🔥 Abdul Wasay's Birthday Countdown 🔥</div>
-    <div class="timer">
-        <span id="days">00</span>d : <span id="hours">00</span>h : <span id="minutes">00</span>m : <span id="seconds">00</span>s
-    </div>
-    <div class="message">⚡ The celebration unlocks at 12:00AM on March 31, 2026 ⚡</div>
-    <button class="skip-btn" onclick="skipCountdown()">✨ Skip & Celebrate Now ✨</button>
-</div>
-
-<!-- INTRO SCREEN -->
+<!-- INTRO SCREEN - Now shown directly, no countdown -->
 <div id="intro">
     <h1>⚡ For My Legendary Bro — Abdul Wasay ⚡</h1>
     <button id="enterBtn" onclick="enterSite()">🤝 Enter The Celebration 🤝</button>
@@ -440,47 +376,8 @@
 </audio>
 
 <script>
-// ----------------------------- COUNTDOWN LOGIC - FIXED TO SHOW CONTENT -----------------------------
-// Set to a past date so countdown finishes immediately
-// Changed to a date that has already passed (Jan 1, 2025)
-const unlockDate = new Date(2025, 0, 1, 0, 0, 0);
-
-let countdownFinished = false;
-
-function updateCountdown() {
-    const now = new Date();
-    const diff = unlockDate - now;
-    
-    // If countdown is finished OR diff <= 0, show intro immediately
-    if (diff <= 0 || countdownFinished) {
-        document.getElementById('countdown').style.display = 'none';
-        document.getElementById('intro').style.display = 'flex';
-        if (window.countdownInterval) clearInterval(window.countdownInterval);
-        return;
-    }
-    
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
-    document.getElementById('days').textContent = String(days).padStart(2, '0');
-    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-}
-
-// Skip countdown function
-function skipCountdown() {
-    countdownFinished = true;
-    document.getElementById('countdown').style.display = 'none';
-    document.getElementById('intro').style.display = 'flex';
-    if (window.countdownInterval) clearInterval(window.countdownInterval);
-}
-
-// Since unlockDate is in past, countdown will finish immediately
-updateCountdown();
-window.countdownInterval = setInterval(updateCountdown, 1000);
+// ----------------------------- NO COUNTDOWN - DIRECT START -----------------------------
+// The intro is already visible, no timer needed
 
 // ----------------------------- WATERMARK -----------------------------
 function createWatermarkText() {
@@ -638,4 +535,175 @@ function moveNo(event) {
             }, { once: true, capture: true });
         }
     }
-    if (moveNoTimeout)
+    if (moveNoTimeout) clearTimeout(moveNoTimeout);
+    moveNoTimeout = setTimeout(() => { moveNoTimeout = null; }, 300);
+    const btn = document.getElementById('noBtn');
+    const proposal = document.getElementById('proposal');
+    const rect = proposal.getBoundingClientRect();
+    const btnWidth = btn.offsetWidth;
+    const btnHeight = btn.offsetHeight;
+    const maxX = rect.width - btnWidth - 20;
+    const maxY = rect.height - btnHeight - 20;
+    let newLeft = Math.random() * Math.max(0, maxX);
+    let newTop = Math.random() * Math.max(0, maxY);
+    const yesBtn = document.querySelector('#proposal button:first-of-type');
+    const yesRect = yesBtn.getBoundingClientRect();
+    let overlap = true;
+    let attempts = 0;
+    while (overlap && attempts < 15) {
+        newLeft = Math.random() * Math.max(0, maxX);
+        newTop = Math.random() * Math.max(0, maxY);
+        const potentialRect = {
+            left: rect.left + newLeft,
+            right: rect.left + newLeft + btnWidth,
+            top: rect.top + newTop,
+            bottom: rect.top + newTop + btnHeight
+        };
+        if (potentialRect.right > yesRect.left && potentialRect.left < yesRect.right &&
+            potentialRect.bottom > yesRect.top && potentialRect.top < yesRect.bottom) {
+            attempts++;
+            continue;
+        }
+        overlap = false;
+    }
+    btn.style.position = 'absolute';
+    btn.style.left = newLeft + 'px';
+    btn.style.top = newTop + 'px';
+    btn.style.marginLeft = '0';
+    btn.style.transform = 'scale(0.9)';
+    setTimeout(() => { btn.style.transform = ''; }, 150);
+    const broMessage = document.createElement('div');
+    broMessage.innerText = '🌀 Bro code says: you cannot escape this legendary friendship 🌀';
+    broMessage.style.position = 'fixed';
+    broMessage.style.bottom = '30%';
+    broMessage.style.left = '50%';
+    broMessage.style.transform = 'translateX(-50%)';
+    broMessage.style.background = 'rgba(0,0,0,0.8)';
+    broMessage.style.backdropFilter = 'blur(12px)';
+    broMessage.style.padding = '10px 20px';
+    broMessage.style.borderRadius = '50px';
+    broMessage.style.fontSize = '1.2rem';
+    broMessage.style.color = '#b3ffec';
+    broMessage.style.zIndex = '1000';
+    broMessage.style.whiteSpace = 'nowrap';
+    document.body.appendChild(broMessage);
+    setTimeout(() => broMessage.remove(), 1500);
+    return false;
+}
+
+function yesClicked() {
+    const mainChildren = document.querySelectorAll('#main > *');
+    mainChildren.forEach(child => {
+        if (!child.classList?.contains('watermark-bg') && child.id !== 'watermarkWrapper') {
+            child.style.display = 'none';
+        }
+    });
+    const videoContainer = document.getElementById('videoContainer');
+    const video = document.getElementById('cakeVideo');
+    videoContainer.style.display = 'flex';
+    video.muted = false;
+    
+    video.addEventListener('ended', function onEnded() {
+        video.removeEventListener('ended', onEnded);
+        videoContainer.style.display = 'none';
+        startBroSlideshow();
+    });
+    video.addEventListener('error', function onError() {
+        videoContainer.style.display = 'none';
+        startBroSlideshow();
+    });
+    video.play().catch(e => {
+        console.log("Video error", e);
+        videoContainer.style.display = 'none';
+        startBroSlideshow();
+    });
+}
+
+function startBroSlideshow() {
+    const slideshowDiv = document.getElementById('images');
+    const images = document.querySelectorAll('#images img');
+    
+    if (images.length === 0) {
+        console.error("No images found!");
+        return;
+    }
+    
+    slideshowDiv.style.display = 'block';
+    
+    images.forEach(img => {
+        img.classList.remove('active');
+        img.onerror = function() {
+            console.log("Image failed to load:", this.src);
+        };
+    });
+    
+    let idx = 0;
+    if (images.length > 0) {
+        images[0].classList.add('active');
+    }
+    
+    function showNextImage() {
+        if (images.length === 0) return;
+        images.forEach(img => img.classList.remove('active'));
+        idx = (idx + 1) % images.length;
+        images[idx].classList.add('active');
+    }
+    
+    const slideInterval = setInterval(showNextImage, 3800);
+    window.slideInterval = slideInterval;
+    
+    const textLines = [
+        "🎂 HAPPY BIRTHDAY ABDUL WASAY! CZN + BESTFRIEND 🎂",
+        "🤜🤛 Blood relation + Bestfriend by choice = LEGENDARY 🤛🤜",
+        "💥 Tu mere TOP TWO mein hai — hamesha yaad rakhna 💥",
+        "🙃 Thodi jealousy, lekin pyaar zyada — you're my brother 🙃",
+        "🫀 BEST WISHES! Enjoy your day king 👑",
+        "😶 Jo main keh nahi sakta, ye slideshow wo alfaaz hai 😶",
+        "🌹 Jitne chaand taare, utni ho umar teri 🌹",
+        "💖 LOVE YOU BHAI — PHOPHO ZAD CZN FOREVER 💖"
+    ];
+    
+    let textDiv = document.querySelector('.slideshow-text');
+    if (!textDiv) {
+        textDiv = document.createElement('div');
+        textDiv.className = 'slideshow-text';
+        document.body.appendChild(textDiv);
+    }
+    
+    let textIndex = 0;
+    function updateText() {
+        textDiv.innerText = textLines[textIndex % textLines.length];
+        textIndex++;
+    }
+    updateText();
+    
+    if (window.textInterval) clearInterval(window.textInterval);
+    window.textInterval = setInterval(updateText, 3800);
+}
+
+function startHeartbeatGlow() {
+    setInterval(() => {
+        const mainDiv = document.getElementById('main');
+        if (mainDiv && mainDiv.style.display === 'block') {
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = 0;
+            overlay.style.left = 0;
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.background = 'radial-gradient(circle, rgba(0,184,169,0.08) 0%, rgba(0,0,0,0) 80%)';
+            overlay.style.pointerEvents = 'none';
+            overlay.style.zIndex = '1';
+            document.body.appendChild(overlay);
+            setTimeout(() => overlay.remove(), 500);
+        }
+    }, 4500);
+}
+
+window.addEventListener('load', () => {
+    startHeartbeatGlow();
+    console.log("Page loaded - celebration ready! No countdown.");
+});
+</script>
+</body>
+</html>
