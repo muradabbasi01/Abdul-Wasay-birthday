@@ -319,6 +319,21 @@
         animation: fadeGlow 0.5s ease;
     }
 
+    /* Loading message for images */
+    .loading-toast {
+        position: fixed;
+        bottom: 30%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.9);
+        padding: 10px 20px;
+        border-radius: 40px;
+        z-index: 260;
+        font-size: 0.9rem;
+        color: #6effc4;
+        white-space: nowrap;
+    }
+
     @media (max-width: 600px) {
         .slideshow-text {
             font-size: 1.2rem;
@@ -406,12 +421,12 @@
 
 <!-- VIDEO CONTAINER -->
 <div class="video-container" id="videoContainer">
-    <video id="lv_7535242429855780149_20260426235217" controls autoplay muted playsinline>
+    <video id="cakeVideo" controls autoplay muted playsinline>
         <source src="lv_7535242429855780149_20260426235217.mp4" type="video/mp4">
     </video>
 </div>
 
-<!-- SLIDESHOW IMAGES (12 images) -->
+<!-- SLIDESHOW IMAGES (12 images) - Using your exact filenames -->
 <div id="images">
     <img src="IMG-20260426-WA0039.jpg" alt="Memory 1 - Wasay's swag">
     <img src="IMG-20260426-WA0041.jpg" alt="Memory 2 - Bhai moments">
@@ -622,145 +637,4 @@ function moveNo(event) {
     const btn = document.getElementById('noBtn');
     const proposal = document.getElementById('proposal');
     const rect = proposal.getBoundingClientRect();
-    const btnWidth = btn.offsetWidth;
-    const btnHeight = btn.offsetHeight;
-    const maxX = rect.width - btnWidth - 20;
-    const maxY = rect.height - btnHeight - 20;
-    let newLeft = Math.random() * Math.max(0, maxX);
-    let newTop = Math.random() * Math.max(0, maxY);
-    const yesBtn = document.querySelector('#proposal button:first-of-type');
-    const yesRect = yesBtn.getBoundingClientRect();
-    let overlap = true;
-    let attempts = 0;
-    while (overlap && attempts < 15) {
-        newLeft = Math.random() * Math.max(0, maxX);
-        newTop = Math.random() * Math.max(0, maxY);
-        const potentialRect = {
-            left: rect.left + newLeft,
-            right: rect.left + newLeft + btnWidth,
-            top: rect.top + newTop,
-            bottom: rect.top + newTop + btnHeight
-        };
-        if (potentialRect.right > yesRect.left && potentialRect.left < yesRect.right &&
-            potentialRect.bottom > yesRect.top && potentialRect.top < yesRect.bottom) {
-            attempts++;
-            continue;
-        }
-        overlap = false;
-    }
-    btn.style.position = 'absolute';
-    btn.style.left = newLeft + 'px';
-    btn.style.top = newTop + 'px';
-    btn.style.marginLeft = '0';
-    btn.style.transform = 'scale(0.9)';
-    setTimeout(() => { btn.style.transform = ''; }, 150);
-    const broMessage = document.createElement('div');
-    broMessage.innerText = '🌀 Bro code says: you cannot escape this legendary friendship 🌀';
-    broMessage.style.position = 'fixed';
-    broMessage.style.bottom = '30%';
-    broMessage.style.left = '50%';
-    broMessage.style.transform = 'translateX(-50%)';
-    broMessage.style.background = 'rgba(0,0,0,0.8)';
-    broMessage.style.backdropFilter = 'blur(12px)';
-    broMessage.style.padding = '10px 20px';
-    broMessage.style.borderRadius = '50px';
-    broMessage.style.fontSize = '1.2rem';
-    broMessage.style.color = '#b3ffec';
-    broMessage.style.zIndex = '1000';
-    broMessage.style.whiteSpace = 'nowrap';
-    document.body.appendChild(broMessage);
-    setTimeout(() => broMessage.remove(), 1500);
-    return false;
-}
-
-function yesClicked() {
-    const mainChildren = document.querySelectorAll('#main > *');
-    mainChildren.forEach(child => {
-        if (!child.classList?.contains('watermark-bg') && child.id !== 'watermarkWrapper') {
-            child.style.display = 'none';
-        }
-    });
-    const videoContainer = document.getElementById('videoContainer');
-    const video = document.getElementById('cakeVideo');
-    videoContainer.style.display = 'flex';
-    video.muted = false;
-    video.addEventListener('ended', function onEnded() {
-        video.removeEventListener('ended', onEnded);
-        videoContainer.style.display = 'none';
-        startBroSlideshow();
-    });
-    video.addEventListener('error', function onError() {
-        videoContainer.style.display = 'none';
-        startBroSlideshow();
-    });
-    video.play().catch(e => {
-        console.log("Video error", e);
-        videoContainer.style.display = 'none';
-        startBroSlideshow();
-    });
-}
-
-function startBroSlideshow() {
-    const slideshowDiv = document.getElementById('images');
-    slideshowDiv.style.display = 'block';
-    const images = document.querySelectorAll('#images img');
-    let idx = 0;
-    images.forEach(img => img.classList.remove('active'));
-    function showNextImage() {
-        images.forEach(img => img.classList.remove('active'));
-        images[idx].classList.add('active');
-        idx = (idx + 1) % images.length;
-        setTimeout(showNextImage, 3800);
-    }
-    showNextImage();
-    const textLines = [
-        "🎂 HAPPY BIRTHDAY ABDUL WASAY! CZN + BESTFRIEND 🎂",
-        "🤜🤛 Blood relation + Bestfriend by choice = LEGENDARY 🤛🤜",
-        "💥 Tu mere TOP TWO mein hai — hamesha yaad rakhna 💥",
-        "🙃 Thodi jealousy, lekin pyaar zyada — you're my brother 🙃",
-        "🫀 BEST WISHES! Enjoy your day king 👑",
-        "😶 Jo main keh nahi sakta, ye slideshow wo alfaaz hai 😶",
-        "🌹 Jitne chaand taare, utni ho umar teri 🌹",
-        "💖 LOVE YOU BHAI — PHOPHO ZAD CZN FOREVER 💖"
-    ];
-    let textDiv = document.querySelector('.slideshow-text');
-    if (!textDiv) {
-        textDiv = document.createElement('div');
-        textDiv.className = 'slideshow-text';
-        document.body.appendChild(textDiv);
-    }
-    let textIndex = 0;
-    function updateText() {
-        textDiv.innerText = textLines[textIndex % textLines.length];
-        textIndex++;
-    }
-    updateText();
-    if (window.textInterval) clearInterval(window.textInterval);
-    window.textInterval = setInterval(updateText, 3800);
-}
-
-function startHeartbeatGlow() {
-    setInterval(() => {
-        const mainDiv = document.getElementById('main');
-        if (mainDiv && mainDiv.style.display === 'block') {
-            const overlay = document.createElement('div');
-            overlay.style.position = 'fixed';
-            overlay.style.top = 0;
-            overlay.style.left = 0;
-            overlay.style.width = '100%';
-            overlay.style.height = '100%';
-            overlay.style.background = 'radial-gradient(circle, rgba(0,184,169,0.08) 0%, rgba(0,0,0,0) 80%)';
-            overlay.style.pointerEvents = 'none';
-            overlay.style.zIndex = '1';
-            document.body.appendChild(overlay);
-            setTimeout(() => overlay.remove(), 500);
-        }
-    }, 4500);
-}
-
-window.addEventListener('load', () => {
-    startHeartbeatGlow();
-});
-</script>
-</body>
-</html>
+    const btnWidth = 
